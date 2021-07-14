@@ -1,0 +1,55 @@
+﻿@model ProjetoAspNetMVC02.Models.ClienteCadastroModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cadastro</title>
+
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <div class="container mt-5">
+
+        <h5>Cadastro de Clientes</h5>
+        <a href="/Home/Index">Voltar para a página inicial</a>
+        <hr/>
+
+        <!-- formulário para cadastro de cliente -->
+        @using (Html.BeginForm("Cadastro", "Cliente", FormMethod.Post,
+                    new { @autocomplete = "off", @class="col-md-4" }))
+        {
+            <label>Informe o nome do cliente:</label>
+            @Html.TextBoxFor(model => model.Nome,
+                new { @class="form-control" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Nome)
+            </span>
+            <br/>
+
+            <label>Informe o endereço de email:</label>
+            @Html.TextBoxFor(model => model.Email,
+                new { @class = "form-control" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Email)
+            </span>
+            <br/>
+
+            <input type="submit" value="Cadastrar Cliente" class="btn btn-success"/>
+        }
+
+        <br/>
+
+        <h5>@TempData["Mensagem"]</h5>
+
+    </div>
+
+</body>
+</html>

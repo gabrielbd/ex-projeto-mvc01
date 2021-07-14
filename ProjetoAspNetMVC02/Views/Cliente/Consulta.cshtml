@@ -1,0 +1,90 @@
+﻿@model ProjetoAspNetMVC02.Models.ClienteConsultaModel
+@using ProjetoAspNetMVC02.Entities
+
+@{
+    Layout = null;
+
+    //capturar o conteudo do TempData
+    var clientes = TempData["Consulta"] as List<Cliente>;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Consulta</title>
+
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <div class="container mt-5">
+
+        <h5>Consulta de Clientes</h5>
+        <a href="/Home/Index">Voltar para a página inicial</a>
+        <hr />
+
+        @using (Html.BeginForm("Consulta", "Cliente", FormMethod.Post,
+            new { @autocomplete = "off", @class = "col-md-3" }))
+        {
+            <label>Informe o nome para pesquisa:</label>
+            @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Nome)
+            </span>
+            <br />
+
+            <input type="submit" class="btn btn-success" value="Pesquisar Clientes" />
+            <br />
+            <br />
+        }
+        
+    <h5>@TempData["Mensagem"]</h5>
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Nome do Cliente</th>
+                    <th>Email</th>
+                    <th>Data de cadastro</th>
+                    <th>Operações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in clientes)
+                {
+                    <tr>
+                        <td>@item.Nome</td>
+                        <td>@item.Email</td>
+                        <td>@item.DataCadastro</td>
+                        <td>
+                            <a href="/Cliente/Edicao?id=@item.IdCliente"
+                               class="btn btn-primary btn-sm">
+                                Alterar
+                            </a>
+                            <a href="/Cliente/Exclusao?id=@item.IdCliente"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Deseja excluir o cliente, @item.Nome?');">
+                                Excluir
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        Quantidade de clientes: @clientes.Count
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+
+</body>
+</html>
+
+

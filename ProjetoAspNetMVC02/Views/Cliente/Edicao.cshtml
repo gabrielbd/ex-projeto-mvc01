@@ -1,0 +1,57 @@
+﻿@model ProjetoAspNetMVC02.Models.ClienteEdicaoModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edicao</title>
+
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <div class="container mt-5">
+
+        <h5>Edição de Clientes</h5>
+        <a href="/Home/Index">Voltar para a página inicial</a>
+        <hr />
+
+        @using (Html.BeginForm("Edicao", "Cliente", FormMethod.Post,
+                  new { @autocomplete = "off", @class = "col-md-4" }))
+        {
+            <!-- campo oculto -->
+            @Html.HiddenFor(model => model.IdCliente)
+
+            <label>Nome do cliente:</label>
+            @Html.TextBoxFor(model => model.Nome,
+                new { @class = "form-control" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Nome)
+            </span>
+            <br />
+
+            <label>Endereço de email:</label>
+            @Html.TextBoxFor(model => model.Email,
+                new { @class = "form-control" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Email)
+            </span>
+            <br />
+
+            <input type="submit" value="Salvar Alterações" class="btn btn-primary" />
+        }
+
+        <br />
+
+        <h5>@TempData["Mensagem"]</h5>
+
+    </div>
+
+</body>
+</html>
