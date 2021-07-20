@@ -81,15 +81,13 @@ namespace ProjetoAspNetMVC02.Controllers
         {
             try
             {
-                //verificar se todos os campos da classe model
-                //estão validados com sucesso (se não há erros de validação)
                 if (ModelState.IsValid)
                 {
                     TempData["Consulta"] = _clienteRepository.ConsultarPorNome(model.Nome);
                 }
                 else
                 {
-                    //retornando para a página todos os clientes
+                 
                     TempData["Consulta"] = _clienteRepository.Consultar();
                 }
             }
@@ -101,13 +99,11 @@ namespace ProjetoAspNetMVC02.Controllers
             return View();
         }
 
-        //método para ser chamado pelo link de exclusão de cliente
-        //este método recebe o id do cliente enviado pelo link
+
         public IActionResult Exclusao(Guid id)
         {
             try
             {
-                //buscar no banco de dados o cliente atraves do id..
                 var cliente = _clienteRepository.ObterPorId(id);
                 //excluindo o cliente
                 _clienteRepository.Excluir(cliente);
@@ -133,10 +129,10 @@ namespace ProjetoAspNetMVC02.Controllers
 
             try
             {
-                //buscar o cliente no banco de dados atraves do id..
+
                 var cliente = _clienteRepository.ObterPorId(id);
 
-                //transferindo os dados do cliente para o model
+
                 model.IdCliente = cliente.IdCliente;
                 model.Nome = cliente.Nome;
                 model.Email = cliente.Email;
